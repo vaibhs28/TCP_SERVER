@@ -3,6 +3,7 @@ package query;
 import java.util.ArrayList;
 import java.util.List;
 
+import exception.InvalidSyntaxException;
 import model.QueryMetaData;
 
 // select name, id from actors where age > 40; 
@@ -14,14 +15,15 @@ public class QueryParser {
 		query = q;
 	}
 
-	public QueryMetaData parse() {
+	public QueryMetaData parse() throws InvalidSyntaxException {
 		String[] tokens = query.split(" ");
 
 		removeBlankToken(tokens);
 		if (tokens[0] != "select") {
+			throw new InvalidSyntaxException("Invalid syntax : missing select statement");
 		}
 
-		return null;
+		return null; 
 	}
 
 	private String[] removeBlankToken(String[] split) {
@@ -31,10 +33,14 @@ public class QueryParser {
 				continue;
 			tokens.add(t);
 		}
-		return (String[]) tokens.toArray();
+		return tokens.toArray(new String[0]);
 	}
 
 	public static void main(String[] args) {
-		new QueryParser("select abc,    bcd from  table").parse();
+		try {
+			new QueryParser("abc,    bcd from  table").parse();
+		} catch (InvalidSyntaxException e) {
+			e.printStackTrace();
+		}
 	}
 }
