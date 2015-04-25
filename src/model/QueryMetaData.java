@@ -5,7 +5,9 @@ import java.util.List;
 public class QueryMetaData {
 
 	private List<String> selectColumns;
-	
+
+	private List<String> requiredColumns;
+
 	private String tableName;
 
 	private List<Predicate> conditions;
@@ -32,6 +34,21 @@ public class QueryMetaData {
 
 	public void setConditions(List<Predicate> conditions) {
 		this.conditions = conditions;
+	}
+
+	public List<String> getRequiredColumns() {
+		return requiredColumns;
+	}
+
+	public void setRequiredColumns(List<String> requiredColumns) {
+		this.requiredColumns = requiredColumns;
+	}
+
+	@Override
+	public String toString() {
+		return "QueryMetaData [selectColumns=" + selectColumns
+				+ ", requiredColumns=" + requiredColumns + ", tableName="
+				+ tableName + ", conditions=" + conditions + "]";
 	}
 
 }

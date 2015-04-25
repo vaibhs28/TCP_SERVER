@@ -3,9 +3,9 @@ package model;
 public class Response {
 
 	private boolean isSuccess;
-	
+
 	private String message;
-	
+
 	private Table table;
 
 	public boolean isSuccess() {
@@ -30,6 +30,12 @@ public class Response {
 
 	public void setTable(Table table) {
 		this.table = table;
+	}
+
+	@Override
+	public String toString() {
+		return "Response [isSuccess=" + isSuccess + ", message=" + message
+				+ ", table=" + table + "]";
 	}
 
 }

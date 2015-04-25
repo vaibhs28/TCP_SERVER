@@ -2,5 +2,5 @@ package model;
 
 public interface Predicate {
 
-	Table evaluate(Table table);
+	boolean evaluate(Table table, int rowNum);
 }

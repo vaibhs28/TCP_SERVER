@@ -9,6 +9,10 @@ public class Row {
 	public Row(List<String> rowValues) {
 		setValues(rowValues);
 	}
+	
+	public String getValue(int colIndex){
+		return values.get(colIndex);
+	}
 
 	public List<String> getValues() {
 		return values;

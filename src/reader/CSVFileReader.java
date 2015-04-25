@@ -28,7 +28,7 @@ public class CSVFileReader {
 		columnHeaders = columns;
 	}
 
-	public synchronized Table read() {
+	public Table read() {
 		BufferedReader br = null;
 		table = new Table(columnHeaders);
 		colIndex = new HashMap<String, Integer>();

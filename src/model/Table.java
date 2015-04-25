@@ -9,12 +9,20 @@ public class Table {
 
 	private List<Row> rows = new ArrayList<Row>();
 
+	private int rowCount = 0;
+
 	public Table(List<String> colHeaders) {
 		columnHeaders = colHeaders;
 	}
 
 	public void addRow(Row row) {
 		rows.add(row);
+		rowCount++;
+	}
+
+	public String getValue(String colName, int rowNum) {
+		int colIndex = columnHeaders.indexOf(colName);
+		return rows.get(rowNum).getValue(colIndex);
 	}
 
 	public List<String> getColumnHeaders() {
@@ -27,8 +35,12 @@ public class Table {
 
 	@Override
 	public String toString() {
-		return "Table [columnHeaders=" + columnHeaders + "\n rows=" + rows
-				+ "]";
+		return "Table [columnHeaders=" + columnHeaders + "\nrows=" + rows
+				+ ", rowCount=" + rowCount + "]";
+	}
+
+	public int getRowCount() {
+		return rowCount;
 	}
 
 }
