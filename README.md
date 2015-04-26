@@ -5,12 +5,12 @@ At the high level application does the following
 
 - Listen on a tcp socket for data from a tcp client. https://github.com/vaibhs28/tcp_server/blob/master/src/tcpserver/TCPServer.java
 
-- Create new thread for each client. https://github.com/vaibhs28/tcp_server/blob/master/src/request/RequestHandler.java
+- Create a new thread for each client. https://github.com/vaibhs28/tcp_server/blob/master/src/request/RequestHandler.java
 
 - Parse the sql text. https://github.com/vaibhs28/tcp_server/blob/master/src/query/QueryParser.java
 
-- Read csv file. https://github.com/vaibhs28/tcp_server/blob/master/src/reader/CSVFileReader.java
+- Read the csv file. https://github.com/vaibhs28/tcp_server/blob/master/src/reader/CSVFileReader.java
 
-- Excute parsed query on a csv file. https://github.com/vaibhs28/tcp_server/blob/master/src/query/QueryExecutor.java
+- Execute parsed query on a csv file. https://github.com/vaibhs28/tcp_server/blob/master/src/query/QueryExecutor.java
 
 - Return the output and format it. https://github.com/vaibhs28/tcp_server/blob/master/src/request/RequestHandler.java
