@@ -5,17 +5,22 @@ import java.util.List;
 
 import model.Response;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import query.QueryExecutor;
 
 public class QueryExecutorTest {
 
-	private static List<String> queries = Arrays.asList(
+	private static List<String> invalidQueries = Arrays.asList(
 			"select",
 			"select name, id", "select name, id from",
 			"select name, id from actors where age",
 			"select name, id from actors where age > ",
+			"select name, id from act where age > 40"
+			);
+
+	private static List<String> validQueries = Arrays.asList(
 			"select name, id from actors where age > 40",
 			"select name, id from actors where id = 4",
 			"select * from actors",
@@ -25,15 +30,22 @@ public class QueryExecutorTest {
 			);
 
 	@Test
-	public void testExecuteQuery() throws Exception {
-		for (String q : queries) {
+	public void testWithInvalidQueries() {
+		for (String q : invalidQueries) {
 			Response r = executeQuery(q);
 			System.out.println("Input query: " + q);
-			if (r.isSuccess()) {
-				System.out.println(r.getTable());
-			} else {
-				System.out.println(r.getMessage());
-			}
+			Assert.assertEquals(false, r.isSuccess());
+			System.out.println(r.getMessage());
+		}
+	}
+	
+	@Test
+	public void testWithValidQueries() throws Exception {
+		for (String q : validQueries) {
+			Response r = executeQuery(q);
+			System.out.println("Input query: " + q);
+			Assert.assertEquals(true, r.isSuccess());
+			System.out.println(r.getTable());
 		}
 	}
 
@@ -41,11 +53,4 @@ public class QueryExecutorTest {
 		return new QueryExecutor(query).execute();
 	}
 
-	// public static void main(String[] args) {
-	// try {
-	// new QueryExecutorTest().testExecuteQuery();
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// }
-	// }
 }
