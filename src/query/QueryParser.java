@@ -51,10 +51,10 @@ public class QueryParser {
 					throw new InvalidSyntaxException(
 							"Invalid syntax : missing where statement");
 				} else {
+					
 					if ((tokens.length - i) != 3) {
 						throw new InvalidSyntaxException("Invalid condition ");
 					} else {
-						selectRequired.addAll(select);
 						selectRequired.add(tokens[i]);
 						qData.setConditions(createCondition(tokens, i));
 						break;
@@ -71,7 +71,7 @@ public class QueryParser {
 				}
 			}
 		}
-
+		selectRequired.addAll(select);
 		if (!isValid) {
 			throw new InvalidSyntaxException(
 					"Invalid syntax : missing from statement");
@@ -98,13 +98,7 @@ public class QueryParser {
 	}
 
 	private String[] removeBlankToken(String[] split) {
-		List<String> tokens = new ArrayList<String>();
-		for (String t : split) {
-			if (t.equals(" ") || t.isEmpty())
-				continue;
-			tokens.add(t);
-		}
-		return tokens.toArray(new String[0]);
+		return removeBlankTokens(split).toArray(new String[0]);
 	}
 
 	private List<String> removeBlankTokens(String[] split) {
@@ -117,6 +111,7 @@ public class QueryParser {
 		return tokens;
 	}
 
+	@SuppressWarnings("unused")
 	private void printTokens(String[] split) {
 		for (String string : split) {
 			System.out.print("|" + string);

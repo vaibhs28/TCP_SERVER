@@ -64,10 +64,10 @@ public class QueryExecutor {
 		if (url != null) {
 			File file = new File(url.getPath());
 			if (!file.isFile()) {
-				throw new InvalidSyntaxException("Invalid file name ");
+				throw new InvalidSyntaxException("Invalid table name ");
 			}
 		} else {
-			throw new InvalidSyntaxException("Invalid file name ");
+			throw new InvalidSyntaxException("Invalid table name ");
 		}
 		return url.getPath();
 	}

@@ -58,6 +58,10 @@ public class RequestHandler implements Runnable {
 	}
 
 	private void writeOutputTable(PrintStream clientOutput, Table table) {
+		if(table.getRowCount() == 0){
+			clientOutput.println("No record found");
+			return;
+		}
 		StringBuffer colHeader = new StringBuffer();
 		StringBuffer formattedLine = new StringBuffer();
 		for (String col : table.getColumnHeaders()) {

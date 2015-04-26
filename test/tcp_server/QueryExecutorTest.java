@@ -18,7 +18,11 @@ public class QueryExecutorTest {
 			"select name, id from actors where age > ",
 			"select name, id from actors where age > 40",
 			"select name, id from actors where id = 4",
-			"select * from actors");
+			"select * from actors",
+			"select * from students",
+			"select name from actors",
+			"select id,name,age from actors"
+			);
 
 	@Test
 	public void testExecuteQuery() throws Exception {
