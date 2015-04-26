@@ -27,13 +27,18 @@ public class QueryExecutor {
 		try {
 			metaData = new QueryParser(query).parse();
 			Table table = new CSVFileReader(getFilePath(metaData.getTableName()
-					+ ".csv"), metaData.getRequiredColumns()).read();
-			Table outputTable = new Table(metaData.getSelectColumns());
+					+ ".csv"), metaData.getRequiredColumns(),
+					metaData.isSelectAll()).read();
+			Table outputTable = new Table(
+					metaData.isSelectAll() ? table.getColumnHeaders()
+							: metaData.getSelectColumns());
 			for (int i = 0; i < table.getRowCount(); i++) {
 				boolean isValidRow = true;
-				for (Predicate condition : metaData.getConditions()) {
-					if (!condition.evaluate(table, i)) {
-						isValidRow = false;
+				if (metaData.getConditions() != null) {
+					for (Predicate condition : metaData.getConditions()) {
+						if (!condition.evaluate(table, i)) {
+							isValidRow = false;
+						}
 					}
 				}
 				if (isValidRow) {
@@ -50,7 +55,7 @@ public class QueryExecutor {
 			response.setSuccess(false);
 			response.setMessage(e.getMessage());
 		}
-		System.out.println(response.toString());
+		// System.out.println(response.toString());
 		return response;
 	}
 
@@ -59,11 +64,10 @@ public class QueryExecutor {
 		if (url != null) {
 			File file = new File(url.getPath());
 			if (!file.isFile()) {
-				throw new InvalidSyntaxException("Invalid file name : "
-						+ fileName);
+				throw new InvalidSyntaxException("Invalid file name ");
 			}
 		} else {
-			throw new InvalidSyntaxException("Invalid file name : " + fileName);
+			throw new InvalidSyntaxException("Invalid file name ");
 		}
 		return url.getPath();
 	}

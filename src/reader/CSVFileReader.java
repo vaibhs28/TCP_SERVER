@@ -23,9 +23,18 @@ public class CSVFileReader {
 
 	private Table table;
 
+	private boolean isAllSelected;
+
 	public CSVFileReader(String fName, List<String> columns) {
 		fileName = fName;
 		columnHeaders = columns;
+	}
+
+	public CSVFileReader(String fName, List<String> columns,
+			boolean isAllSelected) {
+		fileName = fName;
+		columnHeaders = isAllSelected ? new ArrayList<String>() : columns;
+		this.setAllSelected(isAllSelected);
 	}
 
 	public Table read() {
@@ -72,8 +81,13 @@ public class CSVFileReader {
 		if ((line = br.readLine()) != null) {
 			String[] headers = line.split(",");
 			for (int i = 0; i < headers.length; i++) {
-				if (columnHeaders.contains(headers[i])) {
+				if (isAllSelected) {
+					columnHeaders.add(headers[i]);
 					colIndex.put(headers[i], i);
+				} else {
+					if (columnHeaders.contains(headers[i])) {
+						colIndex.put(headers[i], i);
+					}
 				}
 			}
 		}
@@ -81,6 +95,16 @@ public class CSVFileReader {
 
 	public static void main(String[] args) {
 		List<String> columns = Arrays.asList("id", "name", "age");
-		System.out.println(new CSVFileReader("E:\\V\\Workspace\\tcp_server\\csv_files\\actors.csv", columns).read());
+		System.out.println(new CSVFileReader(
+				"E:\\V\\Workspace\\tcp_server\\csv_files\\actors.csv", columns)
+				.read());
+	}
+
+	public boolean isAllSelected() {
+		return isAllSelected;
+	}
+
+	public void setAllSelected(boolean isAllSelected) {
+		this.isAllSelected = isAllSelected;
 	}
 }

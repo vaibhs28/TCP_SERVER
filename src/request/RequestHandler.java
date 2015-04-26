@@ -46,6 +46,9 @@ public class RequestHandler implements Runnable {
 				if (response.isSuccess()) {
 					writeOutputTable(clientOutput, response.getTable());
 				}
+				else{
+					clientOutput.println(response.getMessage() + "\n");
+				}
 			}
 			client.close();
 		} catch (IOException ioe) {

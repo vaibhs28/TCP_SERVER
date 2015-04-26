@@ -11,6 +11,8 @@ public class QueryMetaData {
 	private String tableName;
 
 	private List<Predicate> conditions;
+	
+	private boolean selectAll;
 
 	public List<String> getSelectColumns() {
 		return selectColumns;
@@ -49,6 +51,20 @@ public class QueryMetaData {
 		return "QueryMetaData [selectColumns=" + selectColumns
 				+ ", requiredColumns=" + requiredColumns + ", tableName="
 				+ tableName + ", conditions=" + conditions + "]";
+	}
+
+	/**
+	 * @return the selectAll
+	 */
+	public boolean isSelectAll() {
+		return selectAll;
+	}
+
+	/**
+	 * @param selectAll the selectAll to set
+	 */
+	public void setSelectAll(boolean selectAll) {
+		this.selectAll = selectAll;
 	}
 
 }

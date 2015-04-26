@@ -3,13 +3,13 @@ package query;
 import java.util.ArrayList;
 import java.util.List;
 
-import exception.InvalidSyntaxException;
 import model.EqualTo;
 import model.GreaterThan;
 import model.LessThan;
 import model.NotEqualTo;
 import model.Predicate;
 import model.QueryMetaData;
+import exception.InvalidSyntaxException;
 
 // select name, id from actors where age > 40; 
 public class QueryParser {
@@ -26,11 +26,11 @@ public class QueryParser {
 		List<String> selectRequired = new ArrayList<String>();
 		qData.setSelectColumns(select);
 		qData.setRequiredColumns(selectRequired);
-		boolean isValid = true;
+		boolean isValid = false;
 		String[] tokens = query.split(" ");
 		int i = 0;
 		removeBlankToken(tokens);
-		printTokens(tokens);
+		// printTokens(tokens);
 		if (!tokens[i++].equals("select")) {
 			throw new InvalidSyntaxException(
 					"Invalid syntax : missing select statement");
@@ -40,8 +40,14 @@ public class QueryParser {
 			if (tokens[i].equalsIgnoreCase("from")) {
 				isValid = true;
 				i++;
+				if (i >= tokens.length) {
+					throw new InvalidSyntaxException(
+							"Invalid syntax : missing table name");
+				}
 				qData.setTableName(tokens[i++]);
-				if (!tokens[i++].equalsIgnoreCase("where")) {
+				if (i >= (tokens.length)) {
+					break;
+				} else if (!tokens[i++].equalsIgnoreCase("where")) {
 					throw new InvalidSyntaxException(
 							"Invalid syntax : missing where statement");
 				} else {
@@ -55,7 +61,10 @@ public class QueryParser {
 					}
 				}
 			} else {
-				if (tokens[i].contains(",") && i < tokens.length) {
+				if (tokens[i].equals("*")) {
+					qData.setSelectAll(true);
+					i++;
+				} else if (tokens[i].contains(",") && i < tokens.length) {
 					select.addAll(removeBlankTokens(tokens[i++].split(",")));
 				} else {
 					select.add(tokens[i++]);
